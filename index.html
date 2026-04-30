@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR" style="background:#0d1f2d !important;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OperAI7 — Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+<style>
+  html, body {
+    background: #0d1f2d !important;
+    background-color: #0d1f2d !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-weight: 300;
+  }
+
+  /* Force dark bg on every major wrapper */
+  div, section, nav, footer, header, main {
+    background-color: transparent;
+  }
+
+  /* LOGO COMPONENT — shared */
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 200;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #ffffff;
+    line-height: 1;
+    padding-top: 10px; /* room for macron */
+  }
+  .logo .o {
+    position: relative;
+    display: inline-block;
+  }
+  .logo .o::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: #4dffa0;
+    border-radius: 2px;
+  }
+  .logo .s { color: #4dffa0; }
+
+  /* Section label */
+  .slabel {
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #4dffa0;
+    margin-bottom: 44px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .slabel::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(77,255,160,0.25);
+  }
+
+  /* Card base */
+  .card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  section {
+    padding: 80px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.09);
+  }
+  section:last-child { border-bottom: none; }
+
+  /* Typography samples */
+  .t-display { font-family:'Cormorant Garamond',serif; font-size:64px; font-weight:300; font-style:italic; line-height:1; color:#ffffff; }
+  .t-h1  { font-family:'DM Sans',sans-serif; font-size:46px; font-weight:200; color:#ffffff; letter-spacing:-0.01em; line-height:1.1; }
+  .t-h2  { font-family:'DM Sans',sans-serif; font-size:32px; font-weight:300; color:#ffffff; }
+  .t-h3  { font-family:'DM Sans',sans-serif; font-size:18px; font-weight:400; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; }
+  .t-body{ font-family:'DM Sans',sans-serif; font-size:15px; font-weight:300; line-height:1.72; color:#f0ede8; max-width:480px; }
+  .t-cap { font-family:'DM Sans',sans-serif; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:#d8d4cc; }
+  .t-num { font-family:'Cormorant Garamond',serif; font-size:76px; font-weight:300; color:#4dffa0; letter-spacing:-0.02em; line-height:1; }
+
+  /* Buttons */
+  .btn { display:inline-flex; align-items:center; padding:12px 26px; border-radius:4px; font-family:'DM Sans',sans-serif; font-size:11px; font-weight:400; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; border:none; }
+  .btn-p { background:#4dffa0; color:#0d1f2d; }
+  .btn-g { background:transparent; color:#ffffff; border:1px solid rgba(255,255,255,0.28); }
+  .btn-e { background:#1a4d3a; color:#ffffff; }
+  .btn-sm { padding:9px 18px; font-size:10px; }
+
+  /* Metric cards */
+  .m-label { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#d8d4cc; margin-bottom:10px; }
+  .m-value { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300; color:#ffffff; letter-spacing:-0.02em; line-height:1; }
+  .m-delta { margin-top:10px; font-size:11px; color:#4dffa0; font-weight:400; }
+
+  /* Transactions */
+  .tx { display:flex; align-items:center; gap:13px; padding:13px 0; border-bottom:1px solid rgba(255,255,255,0.08); }
+  .tx:last-child { border-bottom:none; }
+  .tx-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .tx-name { font-size:13px; font-weight:400; color:#ffffff; }
+  .tx-date { font-size:11px; color:#d8d4cc; margin-top:2px; }
+  .tx-val  { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:300; white-space:nowrap; }
+
+  /* Badges */
+  .badge { padding:6px 14px; border-radius:100px; font-size:10px; font-weight:400; letter-spacing:0.1em; text-transform:uppercase; }
+
+  /* Toggle */
+  .tog-wrap { display:flex; align-items:center; gap:12px; }
+  .tog {
+    width:44px; height:24px; border-radius:100px;
+    position:relative; cursor:pointer; flex-shrink:0;
+    transition:background 0.25s;
+  }
+  .tog-thumb {
+    width:18px; height:18px; border-radius:50%; background:#0d1f2d;
+    position:absolute; top:2px; left:2px; transition:transform 0.25s ease;
+  }
+  .tog.on { background:#4dffa0; }
+  .tog.off { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); }
+  .tog.on .tog-thumb  { transform:translateX(20px); }
+
+  /* Input */
+  .inp {
+    width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.18);
+    border-radius:4px; padding:11px 15px; font-family:'DM Sans',sans-serif;
+    font-size:14px; font-weight:300; color:#ffffff; outline:none; box-sizing:border-box;
+  }
+  .inp::placeholder { color:rgba(216,212,204,0.4); }
+  .inp-label { display:block; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#d8d4cc; margin-bottom:7px; }
+
+  /* Logo variants */
+  .lv-logo { display:inline-flex; align-items:center; font-family:'DM Sans',sans-serif; font-weight:200; font-size:26px; letter-spacing:0.24em; text-transform:uppercase; padding-top:10px; }
+  .lv-o { position:relative; display:inline-block; }
+  .lv-o::before { content:''; position:absolute; top:-8px; left:50%; transform:translateX(-50%); width:55%; height:2px; border-radius:2px; }
+
+  @media (max-width:700px) {
+    .grid-3 { grid-template-columns:1fr !important; }
+    .grid-2 { grid-template-columns:1fr !important; }
+    .grid-4 { grid-template-columns:repeat(2,1fr) !important; }
+    .logo-big { font-size:clamp(48px,13vw,80px) !important; }
+    .t-display { font-size:40px; }
+    .t-h1 { font-size:28px; }
+    .type-row { flex-direction:column !important; gap:8px !important; }
+    .tmeta { width:auto !important; }
+    nav .nav-links { display:none !important; }
+  }
+</style>
+</head>
+<body style="background-color:#0d1f2d !important; color:#ffffff !important; margin:0; padding:0;">
+
+<!-- ══ NAV ══ -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:200;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;background-color:#0a1825;border-bottom:1px solid rgba(255,255,255,0.1);">
+  <div class="logo" style="font-size:16px;">
+    <span class="o">O</span>PERAI<span class="s">7</span>
+  </div>
+  <div class="nav-links" style="display:flex;gap:28px;">
+    <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#d8d4cc;cursor:pointer;">Logo</span>
+    <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#d8d4cc;cursor:pointer;">Colors</span>
+    <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#d8d4cc;cursor:pointer;">Type</span>
+    <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#d8d4cc;cursor:pointer;">Components</span>
+  </div>
+  <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;background:rgba(77,255,160,0.1);color:#4dffa0;border:1px solid rgba(77,255,160,0.3);padding:8px 18px;border-radius:100px;">Design System v1</div>
+</nav>
+
+<div style="padding-top:88px; background-color:#0d1f2d !important;">
+<div style="max-width:1080px;margin:0 auto;padding:0 44px;background-color:#0d1f2d;">
+
+<!-- ══ HERO ══ -->
+<section style="background-color:#0d1f2d; min-height:90vh; display:flex; flex-direction:column; justify-content:center; padding:80px 0;">
+  <div class="logo logo-big" style="font-size:clamp(56px,10vw,110px);">
+    <span class="o">O</span>PERAI<span class="s">7</span>
+  </div>
+  <div style="margin-top:14px;font-size:11px;font-weight:400;letter-spacing:0.4em;text-transform:uppercase;color:#d8d4cc;">
+    Artificial Intelligence · Design System · 2025
+  </div>
+  <div style="margin-top:56px;font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,60px);font-weight:300;font-style:italic;line-height:1.15;color:#ffffff;max-width:520px;">
+    Intelligence<br>that moves <span style="font-style:normal;color:#4dffa0;">smarter.</span>
+  </div>
+  <div style="display:flex;gap:14px;margin-top:40px;flex-wrap:wrap;">
+    <button class="btn btn-p">Get Started</button>
+    <button class="btn btn-g">Explore System</button>
+  </div>
+</section>
+
+<!-- ══ 01 LOGO SYSTEM ══ -->
+<section style="background-color:#0d1f2d;">
+  <div class="slabel">01 — Logo System</div>
+
+  <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;border-radius:16px;overflow:hidden;">
+
+    <div style="background-color:#0a1825;padding:56px 32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+      <div class="lv-logo" style="color:#ffffff;">
+        <span class="lv-o" style="color:#ffffff;">
+          <span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:55%;height:2px;background:#4dffa0;border-radius:2px;display:block;"></span>O
+        </span>PERAI<span style="color:#4dffa0;">7</span>
+      </div>
+      <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#d8d4cc;margin-top:4px;">Dark</div>
+    </div>
+
+    <div style="background-color:#1a4d3a;padding:56px 32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+      <div class="lv-logo" style="color:#ffffff;">
+        <span class="lv-o" style="color:#ffffff;">
+          <span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:55%;height:2px;background:#4dffa0;border-radius:2px;display:block;"></span>O
+        </span>PERAI<span style="color:#4dffa0;">7</span>
+      </div>
+      <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,237,232,0.85);margin-top:4px;">Emerald</div>
+    </div>
+
+    <div style="background-color:#f0ede8;padding:56px 32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+      <div class="lv-logo" style="color:#1e1e1e;">
+        <span class="lv-o" style="color:#1e1e1e;">
+          <span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:55%;height:2px;background:#1f6147;border-radius:2px;display:block;"></span>O
+        </span>PERAI<span style="color:#1f6147;">7</span>
+      </div>
+      <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(30,30,30,0.5);margin-top:4px;">Light</div>
+    </div>
+
+  </div>
+
+  <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;">
+    <div class="card">
+      <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#4dffa0;margin-bottom:10px;">Macron no Ō</div>
+      <div style="font-size:13px;font-weight:300;color:#f0ede8;line-height:1.65;">Traço horizontal em Neon Mint acima do "O" — elemento único inspirado no OURA. Sinaliza precisão e distinção.</div>
+    </div>
+    <div class="card">
+      <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#4dffa0;margin-bottom:10px;">Letter Spacing</div>
+      <div style="font-size:13px;font-weight:300;color:#f0ede8;line-height:1.65;">Tracking generoso (0.26em) transmite sofisticação e respiro. Geometria limpa e confiante.</div>
+    </div>
+    <div class="card">
+      <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#4dffa0;margin-bottom:10px;">7 em Neon Mint</div>
+      <div style="font-size:13px;font-weight:300;color:#f0ede8;line-height:1.65;">O numeral ancora a cor primária no próprio nome. Tensão visual inconfundível.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 02 COLORS ══ -->
+<section style="background-color:#0d1f2d;">
+  <div class="slabel">02 — Color System</div>
+  <div class="grid-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+    <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+      <div style="height:80px;background-color:#1a4d3a;"></div>
+      <div style="padding:12px;background-color:#122233;">
+        <div style="font-size:12px;font-weight:400;color:#ffffff;">Emerald Deep</div>
+        <div style="font-size:11px;color:#d8d4cc;margin-top:2px;">#1A4D3A</div>
+      </div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+      <div style="height:80px;background-color:#1f6147;"></div>
+      <div style="padding:12px;background-color:#122233;">
+        <div style="font-size:12px;font-weight:400;color:#ffffff;">Emerald Mid</div>
+        <div style="font-size:11px;color:#d8d4cc;margin-top:2px;">#1F6147</div>
+      </div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+      <div style="height:80px;background-color:#2d8a62;"></div>
+      <div style="padding:12px;background-color:#122233;">
+        <div style="font-size:12px;font-weight:400;color:#ffffff;">Emerald Bright</div>
+        <div style="font-size:11px;color:#d8d4cc;margin-top:2px;">#2D8A62</div>
+      </div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+      <div style="height:80px;background-color:#4dffa0;"></div>
+      <div style="padding:12px;background-color:#122233;">
+        <div style="font-size:12px;font-weight:400;color:#ffffff;">Neon Mint</div>
+        <div style="font-size:11px;color:#d8d4cc;margin-top:2px;">#4DFFA0</div>
+      </div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+      <div style="height:80px;background-color:#0d1f2d;border:1px solid rgba(255,255,255,0.08);"></div>
+      <div style="padding:12px;background-color:#122233;">
+        <div style="font-size:12px;font-weight:400;color:#ffffff;">Deep Navy</div>
+        <div style="font-size:11px;color:#d8d4cc;margin-top:2px;">#0D1F2D</div>
+      </div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+      <div style="height:80px;background-color:#122233;"></div>
+      <div style="padding:12px;background-color:#122233;">
+        <div style="font-size:12px;font-weight:400;color:#ffffff;">Navy Mid</div>
+        <div style="font-size:11px;color:#d8d4cc;margin-top:2px;">#122233</div>
+      </div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+      <div style="height:80px;background-color:#f0ede8;"></div>
+      <div style="padding:12px;background-color:#122233;">
+        <div style="font-size:12px;font-weight:400;color:#ffffff;">Off-White</div>
+        <div style="font-size:11px;color:#d8d4cc;margin-top:2px;">#F0EDE8</div>
+      </div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+      <div style="height:80px;background-color:#d8d4cc;"></div>
+      <div style="padding:12px;background-color:#122233;">
+        <div style="font-size:12px;font-weight:400;color:#ffffff;">Grey Hi</div>
+        <div style="font-size:11px;color:#d8d4cc;margin-top:2px;">#D8D4CC</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 03 TYPOGRAPHY ══ -->
+<section style="background-color:#0d1f2d;">
+  <div class="slabel">03 — Typography</div>
+  <div style="display:flex;flex-direction:column;">
+
+    <div class="type-row" style="display:flex;align-items:baseline;gap:36px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,0.09);">
+      <div class="tmeta" style="width:160px;flex-shrink:0;">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#ffffff;">Display</div>
+        <div style="font-size:12px;color:#d8d4cc;margin-top:5px;line-height:1.5;">Cormorant Garamond<br>72px · 300 · Italic</div>
+      </div>
+      <div class="t-display">Intelligence.</div>
+    </div>
+
+    <div class="type-row" style="display:flex;align-items:baseline;gap:36px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,0.09);">
+      <div class="tmeta" style="width:160px;flex-shrink:0;">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#ffffff;">Heading 1</div>
+        <div style="font-size:12px;color:#d8d4cc;margin-top:5px;line-height:1.5;">DM Sans<br>46px · 200</div>
+      </div>
+      <div class="t-h1">Artificial Intelligence</div>
+    </div>
+
+    <div class="type-row" style="display:flex;align-items:baseline;gap:36px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,0.09);">
+      <div class="tmeta" style="width:160px;flex-shrink:0;">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#ffffff;">Heading 2</div>
+        <div style="font-size:12px;color:#d8d4cc;margin-top:5px;line-height:1.5;">DM Sans<br>32px · 300</div>
+      </div>
+      <div class="t-h2">Recent Operations</div>
+    </div>
+
+    <div class="type-row" style="display:flex;align-items:baseline;gap:36px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,0.09);">
+      <div class="tmeta" style="width:160px;flex-shrink:0;">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#ffffff;">Overline</div>
+        <div style="font-size:12px;color:#d8d4cc;margin-top:5px;line-height:1.5;">DM Sans<br>18px · 400 · UC</div>
+      </div>
+      <div class="t-h3">Section Label</div>
+    </div>
+
+    <div class="type-row" style="display:flex;align-items:baseline;gap:36px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,0.09);">
+      <div class="tmeta" style="width:160px;flex-shrink:0;">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#ffffff;">Body</div>
+        <div style="font-size:12px;color:#d8d4cc;margin-top:5px;line-height:1.5;">DM Sans<br>15px · 300</div>
+      </div>
+      <div class="t-body">Opere com clareza e precisão. Nossa plataforma combina design refinado com inteligência artificial para que cada decisão seja mais consciente.</div>
+    </div>
+
+    <div class="type-row" style="display:flex;align-items:baseline;gap:36px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,0.09);">
+      <div class="tmeta" style="width:160px;flex-shrink:0;">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#ffffff;">Caption</div>
+        <div style="font-size:12px;color:#d8d4cc;margin-top:5px;line-height:1.5;">DM Sans<br>11px · 400 · UC</div>
+      </div>
+      <div class="t-cap">Updated 2 minutes ago</div>
+    </div>
+
+    <div class="type-row" style="display:flex;align-items:baseline;gap:36px;padding:26px 0;">
+      <div class="tmeta" style="width:160px;flex-shrink:0;">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#ffffff;">Numeric</div>
+        <div style="font-size:12px;color:#d8d4cc;margin-top:5px;line-height:1.5;">Cormorant Garamond<br>76px · 300</div>
+      </div>
+      <div class="t-num">$8,750</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 04 COMPONENTS ══ -->
+<section style="background-color:#0d1f2d;">
+  <div class="slabel">04 — Components</div>
+
+  <!-- Metrics -->
+  <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;">
+    <div class="card">
+      <div class="m-label">Total Balance</div>
+      <div class="m-value">$8,750</div>
+      <div class="m-delta">↑ +12.4% este mês</div>
+    </div>
+    <div class="card">
+      <div class="m-label">Operations</div>
+      <div class="m-value">2,341</div>
+      <div class="m-delta">↑ +7.2% vs anterior</div>
+    </div>
+    <div class="card">
+      <div class="m-label">AI Accuracy</div>
+      <div class="m-value">99.7%</div>
+      <div class="m-delta">↑ +0.3% last week</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+
+    <!-- Dashboard card -->
+    <div class="card">
+      <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#d8d4cc;margin-bottom:18px;">Dashboard Card</div>
+      <div style="background:linear-gradient(140deg,#1a4d3a 0%,#122233 100%);border-radius:20px;padding:28px;">
+        <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#d8d4cc;margin-bottom:8px;">Total Available</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:#ffffff;letter-spacing:-0.02em;">$8,750.00</div>
+        <div style="font-size:12px;color:#4dffa0;margin-top:8px;font-weight:400;">↑ +$420 this week</div>
+        <div style="display:flex;gap:8px;margin-top:22px;">
+          <div style="flex:1;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.14);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;">
+            <div style="display:flex;justify-content:center;margin-bottom:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+            <div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#d8d4cc;">Send</div>
+          </div>
+          <div style="flex:1;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.14);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;">
+            <div style="display:flex;justify-content:center;margin-bottom:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+            <div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#d8d4cc;">Add</div>
+          </div>
+          <div style="flex:1;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.14);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;">
+            <div style="display:flex;justify-content:center;margin-bottom:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="7" x2="7" y2="17"/><polyline points="17 17 7 17 7 7"/></svg></div>
+            <div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#d8d4cc;">Request</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="card">
+      <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#d8d4cc;margin-bottom:18px;">Form Elements</div>
+      <div style="margin-bottom:14px;"><label class="inp-label">Amount</label><input class="inp" type="text" value="$1,200.00"></div>
+      <div style="margin-bottom:14px;"><label class="inp-label">Recipient</label><input class="inp" type="text" placeholder="Name or email"></div>
+      <div style="margin-bottom:14px;"><label class="inp-label">Note</label><input class="inp" type="text" placeholder="Optional..."></div>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button class="btn btn-p" style="flex:1;">Confirm</button>
+        <button class="btn btn-g">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Transactions -->
+    <div class="card">
+      <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#d8d4cc;margin-bottom:18px;">Transaction List</div>
+      <div class="tx">
+        <div class="tx-icon" style="background:rgba(77,255,160,0.1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4dffa0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+        <div style="flex:1;"><div class="tx-name">Whole Foods Market</div><div class="tx-date">Today, 14:32</div></div>
+        <div class="tx-val" style="color:#f0ede8;">−$84.50</div>
+      </div>
+      <div class="tx">
+        <div class="tx-icon" style="background:rgba(77,255,160,0.1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4dffa0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 4c-1 0-1.5.5-3.5 2.5L11 8 2.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 7.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div>
+        <div style="flex:1;"><div class="tx-name">Delta Airlines</div><div class="tx-date">Yesterday, 09:15</div></div>
+        <div class="tx-val" style="color:#f0ede8;">−$320.00</div>
+      </div>
+      <div class="tx">
+        <div class="tx-icon" style="background:rgba(77,255,160,0.1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4dffa0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div style="flex:1;"><div class="tx-name">Salary — OperAI7</div><div class="tx-date">Apr 28, 08:00</div></div>
+        <div class="tx-val" style="color:#4dffa0;">+$5,200.00</div>
+      </div>
+      <div class="tx">
+        <div class="tx-icon" style="background:rgba(216,212,204,0.08);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d8d4cc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/></svg></div>
+        <div style="flex:1;"><div class="tx-name">Starbucks</div><div class="tx-date">Apr 27, 07:45</div></div>
+        <div class="tx-val" style="color:#f0ede8;">−$12.50</div>
+      </div>
+    </div>
+
+    <!-- Badges + Buttons + Toggles -->
+    <div class="card">
+      <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#d8d4cc;margin-bottom:14px;">Badges</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+        <span class="badge" style="background:rgba(77,255,160,0.12);color:#4dffa0;border:1px solid rgba(77,255,160,0.3);">Active</span>
+        <span class="badge" style="background:rgba(77,255,160,0.12);color:#4dffa0;border:1px solid rgba(77,255,160,0.3);">Verified</span>
+        <span class="badge" style="background:rgba(255,255,255,0.09);color:#ffffff;border:1px solid rgba(255,255,255,0.22);">Pending</span>
+        <span class="badge" style="background:rgba(255,100,100,0.1);color:#ff9090;border:1px solid rgba(255,100,100,0.25);">Declined</span>
+      </div>
+      <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#d8d4cc;margin-bottom:12px;">Buttons</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;">
+        <button class="btn btn-sm btn-p">Primary</button>
+        <button class="btn btn-sm btn-e">Emerald</button>
+        <button class="btn btn-sm btn-g">Ghost</button>
+      </div>
+      <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#d8d4cc;margin-bottom:14px;">Toggles</div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="tog-wrap">
+          <div class="tog on" onclick="this.classList.toggle('on');this.classList.toggle('off');this.querySelector('.tog-thumb').style.transform=this.classList.contains('on')?'translateX(20px)':'translateX(0)'">
+            <div class="tog-thumb" style="transform:translateX(20px);"></div>
+          </div>
+          <span style="font-size:13px;color:#ffffff;">Notifications</span>
+        </div>
+        <div class="tog-wrap">
+          <div class="tog off" onclick="this.classList.toggle('on');this.classList.toggle('off');this.querySelector('.tog-thumb').style.transform=this.classList.contains('on')?'translateX(20px)':'translateX(0)'">
+            <div class="tog-thumb"></div>
+          </div>
+          <span style="font-size:13px;color:#ffffff;">Dark Mode</span>
+        </div>
+        <div class="tog-wrap">
+          <div class="tog on" onclick="this.classList.toggle('on');this.classList.toggle('off');this.querySelector('.tog-thumb').style.transform=this.classList.contains('on')?'translateX(20px)':'translateX(0)'">
+            <div class="tog-thumb" style="transform:translateX(20px);"></div>
+          </div>
+          <span style="font-size:13px;color:#ffffff;">AI Assist</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ 05 SPACING ══ -->
+<section style="background-color:#0d1f2d;">
+  <div class="slabel">05 — Spacing Scale</div>
+  <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="background:#2d8a62;border-radius:2px;width:36px;height:4px;"></div><span style="font-size:10px;color:#d8d4cc;">4</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="background:#2d8a62;border-radius:2px;width:36px;height:8px;"></div><span style="font-size:10px;color:#d8d4cc;">8</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="background:#2d8a62;border-radius:2px;width:36px;height:12px;"></div><span style="font-size:10px;color:#d8d4cc;">12</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="background:#2d8a62;border-radius:2px;width:36px;height:16px;"></div><span style="font-size:10px;color:#d8d4cc;">16</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="background:#2d8a62;border-radius:2px;width:36px;height:24px;"></div><span style="font-size:10px;color:#d8d4cc;">24</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="background:#2d8a62;border-radius:2px;width:36px;height:32px;"></div><span style="font-size:10px;color:#d8d4cc;">32</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="background:#2d8a62;border-radius:2px;width:36px;height:40px;"></div><span style="font-size:10px;color:#d8d4cc;">40</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="background:#2d8a62;border-radius:2px;width:36px;height:48px;"></div><span style="font-size:10px;color:#d8d4cc;">48</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="background:#2d8a62;border-radius:2px;width:36px;height:64px;"></div><span style="font-size:10px;color:#d8d4cc;">64</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="background:#2d8a62;border-radius:2px;width:36px;height:80px;"></div><span style="font-size:10px;color:#d8d4cc;">80</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="background:#2d8a62;border-radius:2px;width:36px;height:100px;"></div><span style="font-size:10px;color:#d8d4cc;">100</span></div>
+  </div>
+</section>
+
+<!-- ══ 06 ICONS ══ -->
+<section style="background-color:#0d1f2d;">
+  <div class="slabel">06 — Icon System</div>
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;">
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="7" x2="7" y2="17"/><polyline points="17 17 7 17 7 7"/></svg></div>
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></div>
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div>
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div>
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></div>
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
+    <div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<footer style="text-align:center;padding:60px 40px;border-top:1px solid rgba(255,255,255,0.1);background-color:#0a1825;">
+  <div class="logo" style="font-size:13px;justify-content:center;">
+    <span class="o">O</span>PERAI<span class="s">7</span>
+    <span style="color:#9e9b95;margin-left:8px;">&nbsp;·&nbsp;Design System</span>
+  </div>
+  <div style="font-size:11px;color:#9e9b95;letter-spacing:0.1em;margin-top:12px;">Emerald Green · Deep Navy · Neon Mint — v1.0 · 2025</div>
+</footer>
+
+</body>
+</html>
